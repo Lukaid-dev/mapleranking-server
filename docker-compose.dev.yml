@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  django_dev:
+    container_name: django_dev
+    build:
+      context: .
+      dockerfile: ${DOCKERFILE}
+    command: python manage.py runserver 0.0.0.0:${ENTRY_PORT}
+    volumes:
+      - ./:/usr/src/mapleranking-server/
+    ports:
+      - ${ENTRY_PORT}:${ENTRY_PORT}
+    env_file: ${ENVFILE}
+    depends_on:
+      - db_dev
+    networks:
+      - mapleranking-network
+
+  db_dev:
+    container_name: db_dev
+    image: postgres:16.2-alpine
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data_dev/
+    expose:
+      - ${SQL_PORT}
+    ports:
+      - "${SQL_PORT}:${SQL_PORT}"
+    environment:
+      POSTGRES_DB: ${SQL_DATABASE}
+      POSTGRES_USER: ${SQL_USER}
+      POSTGRES_PASSWORD: ${SQL_PASSWORD}
+    command: -p ${SQL_PORT}
+    networks:
+      - mapleranking-network
+
+volumes:
+  postgres_data_dev:
+
+networks:
+  mapleranking-network:
+    driver: bridge
