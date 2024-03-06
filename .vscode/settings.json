@@ -1,5 +1,12 @@
 {
-  "cSpell.words": ["asdasd", "corsheaders"],
+  "cSpell.words": [
+    "asdasd",
+    "corsheaders",
+    "mapleland",
+    "Mapleranking",
+    "redoc",
+    "yasg"
+  ],
   "[python]": {
     "editor.tabSize": 4,
     "editor.defaultFormatter": "ms-python.black-formatter"
